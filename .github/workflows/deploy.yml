@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted #ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -26,18 +26,18 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-    - name: Install miredo
-      run: |
-        sudo apt install -y miredo
-        sudo sed -i 's/ServerAddress	teredo-debian.remlab.net/ServerAddress teredo.iks-jena.de/g' /etc/miredo.conf
-        sudo miredo
-        cat /etc/miredo.conf
-        sleep 1
-        ip addr
-        sleep 1
-        ip addr
-        sleep 1
-        ip addr
+    # - name: Install miredo
+    #   run: |
+    #     sudo apt install -y miredo
+    #     sudo sed -i 's/ServerAddress	teredo-debian.remlab.net/ServerAddress teredo.iks-jena.de/g' /etc/miredo.conf
+    #     sudo miredo
+    #     cat /etc/miredo.conf
+    #     sleep 1
+    #     ip addr
+    #     sleep 1
+    #     ip addr
+    #     sleep 1
+    #     ip addr
 
     - name: Test IPv6 connectivity
       run: |
