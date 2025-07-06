@@ -21,6 +21,11 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
+    - name: Test IPv6 connectivity
+      run: |
+        curl -6 -k https://quasi.su:16443 || echo "Curl failed"
+        ping6 -c 4 ${{ secrets.SSH_HOST }} || echo "Ping failed"
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
