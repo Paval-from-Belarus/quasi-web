@@ -88,7 +88,7 @@ async fn main() -> std::io::Result<()> {
                     .index_file("index.html"),
             )
     })
-    .bind(("127.0.0.1", 8081))?
+    .bind(("0.0.0.0", 8080))?
     .run()
     .await
 }

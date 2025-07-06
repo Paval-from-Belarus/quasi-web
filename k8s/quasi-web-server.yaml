@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quasi-web-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quasi-web-server
+  template:
+    metadata:
+      labels:
+        app: quasi-web-server
+    spec:
+      containers:
+      - name: quasi-web-server
+        image: your_docker_username/quasi-web-server:latest # Replace with your registry/repo
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quasi-web-server
+spec:
+  selector:
+    app: quasi-web-server
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
