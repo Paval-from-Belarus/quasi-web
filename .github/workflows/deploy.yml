@@ -33,6 +33,13 @@ jobs:
       with:
         version: 'latest'
 
+    - name: Set up SSH tunnel
+      run: |
+        sudo apt-get update && sudo apt-get install -y openssh-client
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
+        chmod 600 ssh_key
+        ssh -6 -i ssh_key -f -N -L 16443:localhost:16443 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }}
+
     - name: Deploy to MicroK8s
       env:
         KUBECONFIG: ${{ secrets.KUBECONFIG }}

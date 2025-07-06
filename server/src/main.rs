@@ -1,9 +1,8 @@
 use actix_cors::Cors;
-use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::fs;
-use toml;
 
 #[derive(Deserialize)]
 struct Config {
