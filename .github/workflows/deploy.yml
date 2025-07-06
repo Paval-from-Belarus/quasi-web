@@ -26,18 +26,18 @@ jobs:
         sudo apt install -y miredo
         sudo sed -i 's/ServerAddress	teredo-debian.remlab.net/ServerAddress teredo.iks-jena.de/g' /etc/miredo.conf
         sudo miredo
-        cat /etc/miredo.conf
-        sleep 1
-        ip addr
-        sleep 1
-        ip addr
-        sleep 1
-        ip addr
 
     - name: Test IPv6 connectivity
       run: |
-        curl -6 -k https://quasi.su:16443 || echo "Curl failed"
-        ping6 -c 4 ${{ secrets.SSH_HOST }} || echo "Ping failed"
+        ping6 -c 4 ${{ secrets.SSH_HOST }} || exit "Ping is failed"
+
+    - name: Set up SSH tunnel
+      run: |
+        sudo apt-get update && sudo apt-get install -y openssh-client
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
+        chmod 600 ssh_key
+        ip a
+        ssh -6 -i ssh_key -N -L 16443:localhost:16443 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
@@ -50,13 +50,6 @@ jobs:
       uses: azure/setup-kubectl@v3
       with:
         version: 'latest'
-
-    - name: Set up SSH tunnel
-      run: |
-        sudo apt-get update && sudo apt-get install -y openssh-client
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
-        chmod 600 ssh_key
-        ssh -6 -i ssh_key -f -N -L 16443:localhost:16443 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }}
 
     - name: Deploy to MicroK8s
       env:
