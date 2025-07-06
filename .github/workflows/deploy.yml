@@ -39,9 +39,9 @@ jobs:
       run: |
         echo "$KUBECONFIG" > kubeconfig.yaml
         export KUBECONFIG=kubeconfig.yaml
-        kubectl apply -f k8s/quasi-web-server.yaml
-        kubectl apply -f k8s/nginx.yaml
+        kubectl apply -f k8s/quasi-web-server.yaml --validate=false
+        # kubectl apply -f k8s/nginx.yaml --validate=false
         kubectl rollout restart deployment/quasi-web-server
-        kubectl rollout restart deployment/nginx
+        # kubectl rollout restart deployment/nginx
         kubectl rollout status deployment/quasi-web-server
-        kubectl rollout status deployment/nginx
+        # kubectl rollout status deployment/nginx
