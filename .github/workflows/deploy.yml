@@ -39,9 +39,9 @@ jobs:
     #     sleep 1
     #     ip addr
 
-    - name: Test IPv6 connectivity
-      run: |
-        ping6 -c 4 ${{ secrets.SSH_HOST }} || exit "Ping is failed"
+    # - name: Test IPv6 connectivity
+    #   run: |
+    #     ping6 -c 4 ${{ secrets.SSH_HOST }} || exit "Ping is failed"
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
