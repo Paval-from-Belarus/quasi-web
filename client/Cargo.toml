@@ -1,0 +1,11 @@
+[package]
+name = "client"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+leptos = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+# wasm-bindgen = "0.2"
+console_error_panic_hook = "0.1"
