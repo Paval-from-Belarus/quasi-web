@@ -6,10 +6,10 @@ RUN rustup target add x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu
 # Build for the target architecture (set by Docker Buildx)
 ARG TARGETARCH
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-      cargo build --release --target x86_64-unknown-linux-gnu && \
+      cargo build --release --bin server --target x86_64-unknown-linux-gnu && \
       mv target/x86_64-unknown-linux-gnu/release/server /app/server; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
-      cargo build --release --target aarch64-unknown-linux-gnu && \
+      cargo build --release --bin server --target aarch64-unknown-linux-gnu && \
       mv target/aarch64-unknown-linux-gnu/release/server /app/server; \
     else \
       echo "Unsupported architecture: $TARGETARCH" && exit 1; \
