@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: quasi-web-server
-        image: your_docker_username/quasi-web-server:latest # Replace with your registry/repo
+        image: pavalshlyk/quasi-web-server:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

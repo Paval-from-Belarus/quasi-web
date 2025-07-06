@@ -12,6 +12,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+      with:
+        platforms: linux/amd64,linux/arm64
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
@@ -26,6 +31,13 @@ jobs:
         sudo apt install -y miredo
         sudo sed -i 's/ServerAddress	teredo-debian.remlab.net/ServerAddress teredo.iks-jena.de/g' /etc/miredo.conf
         sudo miredo
+        cat /etc/miredo.conf
+        sleep 1
+        ip addr
+        sleep 1
+        ip addr
+        sleep 1
+        ip addr
 
     - name: Test IPv6 connectivity
       run: |
@@ -35,6 +47,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
+        platforms: linux/amd64,linux/arm64
         push: true
         tags: pavalshlyk/quasi-web-server:latest
 
