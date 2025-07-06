@@ -49,7 +49,7 @@ jobs:
       run: |
         echo "$KUBECONFIG" > kubeconfig.yaml
         export KUBECONFIG=kubeconfig.yaml
-        kubectl apply -f k8s/quasi-web-server.yaml --validate=false
+        kubectl apply -f k8s/quasi-web-server.yaml --validate=false --insecure-skip-tls-verify=true
         # kubectl apply -f k8s/nginx.yaml --validate=false
         kubectl rollout restart deployment/quasi-web-server
         # kubectl rollout restart deployment/nginx
