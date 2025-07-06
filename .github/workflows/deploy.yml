@@ -21,6 +21,19 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
+    - name: Install miredo
+      run: |
+        sudo apt install -y miredo
+        sudo sed -i 's/ServerAddress	teredo-debian.remlab.net/ServerAddress teredo.iks-jena.de/g' /etc/miredo.conf
+        sudo miredo
+        cat /etc/miredo.conf
+        sleep 1
+        ip addr
+        sleep 1
+        ip addr
+        sleep 1
+        ip addr
+
     - name: Test IPv6 connectivity
       run: |
         curl -6 -k https://quasi.su:16443 || echo "Curl failed"
